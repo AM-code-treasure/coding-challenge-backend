@@ -9,10 +9,47 @@ info:
 servers:
 - url: http://localhost:8080/
 paths:
+  /Applications:
+    get:
+      tags:
+        - Applications
+      summary: Show all applications
+      description: Show all applications
+      operationId: getAllApplications
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Applications' 
+  /Applications/{id}:
+    get:
+      tags:
+      - Applications
+      summary: Get a Application by ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID that needs to be fetched.
+        required: true
+        schema:
+          type: string
+      operationId: getApplicationByID
+      responses:
+        200:
+          description: Showing requested Application
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applications'
+                  
   /createApplication:
     post:
       tags:
-        - pet
+        - Applications
       summary: Create a new application
       description: Create a new application
       operationId: createApplication
@@ -21,7 +58,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Application'
+              $ref: '#/components/schemas/Applications'
         required: true
       responses:
         '200':
@@ -29,11 +66,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Application'        
+                $ref: '#/components/schemas/Applications'        
           
 components:
   schemas:
-    Application:
+    Applications:
       required:
         - e-mail
         - name
